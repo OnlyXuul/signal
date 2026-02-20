@@ -185,25 +185,25 @@ default :: proc {default_i23, default_enum}
 //	tell system there is no signal handler for the given signal
 //	the system should use it's default for the given signal
 default_i23 :: proc(sig: i32) -> (proc(_: i32)) {
-	return (proc(_: i32))(libc.signal(sig, (proc "cdecl" (i32))(libc.SIG_DFL)))
+	return (proc(_: i32))(libc.signal(sig, (proc "cdecl" (i32))(SIG_DFL)))
 }
 
 //	tell system there is no signal handler for the given signal
 //	the system should use it's default for the given signal
 default_enum :: proc(sig: $S) -> (proc(_: i32)) where intrinsics.type_is_enum(S) {
-	return (proc(_: i32))(libc.signal(i32(sig), (proc "cdecl" (i32))(libc.SIG_DFL)))
+	return (proc(_: i32))(libc.signal(i32(sig), (proc "cdecl" (i32))(SIG_DFL)))
 }
 
 ignore :: proc {ignore_i23, ignore_enum}
 
 //	ignores a given signal (except the signals SIGKILL and SIGSTOP which can't be caught or ignored).
 ignore_i23 :: proc(sig: i32) -> (proc(_: i32)) {
-	return (proc(_: i32))(libc.signal(sig, (proc "cdecl" (i32))(libc.SIG_IGN)))
+	return (proc(_: i32))(libc.signal(sig, (proc "cdecl" (i32))(SIG_IGN)))
 }
 
 //	ignores a given signal (except the signals SIGKILL and SIGSTOP which can't be caught or ignored).
 ignore_enum :: proc(sig: $S) -> (proc(_: i32)) where intrinsics.type_is_enum(S) {
-	return (proc(_: i32))(libc.signal(i32(sig), (proc "cdecl" (i32))(libc.SIG_IGN)))
+	return (proc(_: i32))(libc.signal(i32(sig), (proc "cdecl" (i32))(SIG_IGN)))
 }
 
 raise :: proc {raise_i23, raise_enum}
